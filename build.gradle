@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.minecraftforge.net' }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.spongepowered.org/maven' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+/*************  plugins  *************/
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+/*************  ForgeGradle  *************/
+minecraft {
+    version   = '1.12.2-14.23.5.2838'
+    runDir    = 'run'
+    mappings  = 'stable_39'
+    useDepAts = true
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+/*************  projeto  *************/
+group   = 'com.lypaka'
+version = '1.0'
+sourceCompatibility = targetCompatibility = '1.8'
+
+/*************  repositórios  *************/
+repositories {
+    maven { url 'https://maven.minecraftforge.net' }
+    maven { url 'https://repo.spongepowered.org/maven' }
+    mavenCentral()
+    flatDir { dirs 'libs' }
+}
+
+/*************  dependências  *************/
+dependencies {
+    compileOnly 'org.spongepowered:spongeapi:7.3.0'
+    compileOnly 'ninja.leaping.configurate:configurate-core:3.7.1'
+
+    compileOnly files('libs/pixelmon-1.12.2-8.4.3-universal.jar')
+    compileOnly files('libs/GooeyLibs-2.2.0.jar')
+    compileOnly files('libs/HuskyUI-v0.6.0-PRE4-API7.jar')
+}
+
+/*************  empacotamento  *************/
+jar {
+    baseName = 'BattleTowerRespongedSponge'
+
+    exclude 'mcmod.info'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+            'Implementation-Title': baseName,
+            'Implementation-Version': version,
+            'Main-Class': 'com.lypaka.battletower.Main'
+        )
+    }
+}
